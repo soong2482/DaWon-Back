@@ -1,9 +1,12 @@
-import "../css/homebody.css";
-import 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css';
-import 'https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css';
-import 'https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css';
+import "../styles/homebody.css";
+import "../styles/swiper.css";
+import "../styles/uicons.css";
+import "../styles/uicons2.css";
 import React, { useEffect, useState } from 'react';
-import HomeJS from '../js/HomeJS';
+import HomeJS from '../services/HomeJS';
+import Loadable from 'react-loadable';
+import Clock from "../components/Clock";
+import Header from "../components/Header";
 function Home(){
     useEffect(() => {
         HomeJS();
@@ -11,9 +14,9 @@ function Home(){
     return(
         
         <div className="home-container">
-              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+        
         <div className="home-first">
-           <div id = "header" className="header"></div>
+           <Header id = "header" className="header"></Header>
              <div className="header_slide">
                  <div id="slider"></div>
              </div>
@@ -31,7 +34,7 @@ function Home(){
              <div className="home_first_call_main">
                   <div className="main_top"> </div>
 
-                       <input type="hidden" className="clock" id="clock" name="date" readonly/>
+                       <Clock/>
                   <div className="main_main">
                      <div className="left">
                        <div>이름</div>
@@ -86,7 +89,7 @@ function Home(){
                   </div>
 
              </div>
-            <div id="pop_info_detail" className="pop_wrap" style="display:none;">
+            <div id="pop_info_detail" className="pop_wrap" s style={{ display: 'none' }}>
                 <div className="pop_inner">
 
                     <h2>약관</h2>
@@ -112,7 +115,7 @@ function Home(){
 
              <div className="home_first_call_sidebab">
 
-                 <button onclick="submit()" className="sidebab_button"><i
+                 <button className="sidebab_button"><i
                    className=
                    "fi fi-rr-search-alt"
                    ></i>견적문의</button>
@@ -142,9 +145,9 @@ function Home(){
            </div>       
              <div className="sidebab">
                  <div>
-                 <img id="callimg" src="/img/call_img.jpg"style="width:110px; height:130px;"/>
-                 <img id="inquiredimg" src="/img/inquired_img.jpg" onclick="location.href=/requestpage"style="width:110px; height:130px;"/>
-                     <img id="talkimg" src="/img/talk_img.jpg"  onclick="kakaotalk()" style="width:110px; height:130px;"/>
+                 <img id="callimg" src="/img/call_img.jpg"  style={{ width: '110px', height: '130px' }}/>
+                 <img id="inquiredimg" src="/img/inquired_img.jpg" onClick="location.href=/requestpage" style={{ width: '110px', height: '130px' }}/>
+                     <img id="talkimg" src="/img/talk_img.jpg"  style={{ width: '110px', height: '130px' }}/>
                  </div>
              </div>
            </div>
