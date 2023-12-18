@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/adminbanner.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/bannerpopup.js" type="text/javascript" defer="defer"></script>
+    <title>Document</title>
+</head>
+<body>
+<div class="banner_container">
+    <div class="banner_top">
+    </div>
+    <div class="banner_dawon">
+        <div class="banner_img">
+            <img src="/img/dawonlogo.png" alt="">
+        </div>
+        
+
+        <div class="wrap">
+            <a field="pop_info_create" class="btn_open">등록</a>
+            <div id="pop_info_create" class="pop_wrap" style="display:none;">
+                <div class="pop_inner">
+
+                        배너 위치 선택
+                        <select id="banner_size" onchange="change()" title="banner">
+                            <option value="">배너 위치 선택</option>
+                            <option value="Home_banner">Home_banner</option>
+                            <option value="center_banner">center_banner</option>
+                        </select>
+                        <form id="form" action="/adminhomebannerupload" method="post" enctype="multipart/form-data">
+                            <br>
+                            <div>이름</div>
+                            <div><input placeholder="배너 이름을 입력해주세요." name="home_name" id="name"></div>
+                            <br>
+                            <div>파일선택</div>
+                                <div class="filebox">
+                                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" />
+                                    <label for="file">파일찾기</label>
+                                    <input type="file" id="file" name="img1" onchange="readURL(this)"/>
+                            </div>
+                            <div class="preview_img">
+                                <img id="preview" alt="사진X"/>
+                            </div>
+                            <input class="submit_button" type="submit">
+                            <br>
+                        </form>
+                        <button type="button" class="btn_close">닫기</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="select_name">
+        Main_HOME(상단 배너)
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>CheckImg</th>
+            <th>Delete</th>
+            <th>Change</th>
+        </thead>
+        <tbody>
+        <tr th:each="adminhomebanner : ${adminhomebanners}">
+
+
+            <td th:text="${adminhomebanner.number}">1</td>
+            <td th:text="${adminhomebanner.home_name}">123</td>
+            <td><button th:field="pop_info_homebanner+${adminhomebanner.number}" class="btn_open">사진확인</button></td>
+            <td><button class="delete"  th:field="${adminhomebanner.number}"  th:id="${adminhomebanner.id}" onclick="update(this.getAttribute('id'),this.getAttribute('field'))">삭제</button></td>
+            <div th:id="pop_info_homebanner+${adminhomebanner.number}" class="pop_wrap" style="display:none;">
+                <div class="pop_inner">
+                    <img th:src="@{/homebannerimg?name=}+${adminhomebanner.home_name}" />
+                    <button type="button" class="btn_close">닫기</button>
+                </div>
+            </div>
+            <td><button th:field="pop_info_homebanner_change+${adminhomebanner.number}" class="btn_open">순서변경</button></td>
+
+            <div th:id="pop_info_homebanner_change+${adminhomebanner.number}" class="pop_wrap" style="display:none;">
+                <div class="pop_inner">
+                    <h2>홈배너 순서 변경</h2>
+                    <br>
+                    <div><h4>현재 순서</h4></div>
+                    <div th:text="${adminhomebanner.number}"></div>
+                    <div><h4>바꿀 순서</h4></div>
+                    <div><input id="input" th:class="changenumber+${adminhomebanner.number}" type="text"></div>
+                    <br>
+                    <div><button th:field="${adminhomebanner.number}" th:id="${adminhomebanner.id}"  class="changebutton"onclick="changenumber(this.getAttribute('id'),this.getAttribute('field'))">순서변경</button></div>
+                    <br>
+                    <button type="button" class="btn_close">닫기</button>
+
+                </div>
+            </div>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <div class="select_name">
+        Center_HOME(중간배너)
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>CheckImg</th>
+            <th>Delete</th>
+            <th>Look</th>
+            <th>ChangeLook</th>
+        </thead>
+        <tbody>
+        <tr th:each="admincenterbanner : ${admincenterbanners}" th:style="${admincenterbanner.look == 'true' ? 'background-color:#DFE3FF;':'background-color:white'}">
+
+
+            <td th:text="${admincenterbanner.id}">1</td>
+            <td th:text="${admincenterbanner.center_name}">123</td>
+            <td><button th:field="pop_info_centerbanner+${admincenterbanner.id}" class="btn_open">사진확인</button></td>
+            <td><button class="delete"  th:id="${admincenterbanner.id}" onclick="update2(this.getAttribute('id'))">삭제</button></td>
+            <td th:text="${admincenterbanner.look}"></td>
+            <td><button th:id="${admincenterbanner.id}" class="change_button" onclick="changelook(this.getAttribute('id'))">true로 변경</button></td>
+            <div th:id="pop_info_centerbanner+${admincenterbanner.id}" class="pop_wrap" style="display:none;">
+                <div class="pop_inner">
+                    <img th:src="@{/centerbannerimg?name=}+${admincenterbanner.center_name}" />
+                    <button type="button" class="btn_close">닫기</button>
+                </div>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+</body>
+</html>

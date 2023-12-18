@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="/js/carlist.js" type="text/javascript" defer="defer"></script>
+
+</head>
+<body>
+<ul class="car_list">
+
+  <li th:each ="car : ${cars}">
+    <div class="img"><img th:src="@{/carimg?name=}+${car.car_name}"></div>
+    <div class="logo"><img th:src="${car.car_brand}" alt="AUDI"/><span th:text="${car.car_name}"></span></div>
+    <hr>
+
+    <div class="button_div">
+      <div class="button_div_asidebar">
+        <div>리스<div class="sunnap">&nbsp</div></div>
+       
+        <div>렌트</div>
+      </div>
+      <div class="button_div_main">
+        <div>월 <span th:text="${car.car_lease_price}"></span>원<div class="sunnap">(선납금 30%)</div></div>
+
+        <div th:text="${car.car_rent_price}"></div>
+      </div>
+      <div class="button_buttonbar">
+        <div><button th:id="${car.car_name}"   onclick="requestpost(this.getAttribute('id'),'리스')" class="rightbutton">견적문의</button></div>
+        <br>
+        <div><button th:id="${car.car_name}"   onclick="requestpost(this.getAttribute('id'),'렌트')" class="rightbutton">견적문의</button></div>
+      </div>
+    </div>
+
+  </li>
+
+</ul>
+</body>
+</html>
