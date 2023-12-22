@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import kakaoImage from '../assets/kakao.png';
 import blogImage from '../assets/blog.png';
 import logo from '../assets/dawonlogo.png';
+import '../styles/uicons.css';
 import '../styles/headerstyle.css'; // headerstyle.css 파일 경로에 맞게 수정
+import HeaderJS from '../services/headerJS.js';
 const Header = () => {
 
-
+  useEffect(() =>{
+    HeaderJS();
+  },[]);
   return (
     <header>
       <div className="container">

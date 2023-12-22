@@ -4,9 +4,15 @@ import "../styles/uicons.css";
 import "../styles/uicons2.css";
 import React, { useEffect, useState } from 'react';
 import HomeJS from '../services/HomeJS';
-import Loadable from 'react-loadable';
 import Clock from "../components/Clock";
 import Header from "../components/Header";
+import Slider from "../components/HomeSlider";
+import Fotter from '../components/Fotter';
+import CarList from "../components/CarList";
+import call_img from "../assets/call_img.jpg";
+import talk_img from "../assets/talk_img.jpg";
+import inquired_img from "../assets/inquired_img.jpg";
+import dawonlogo from "../assets/dawonlogo.png";
 function Home(){
     useEffect(() => {
         HomeJS();
@@ -18,7 +24,7 @@ function Home(){
         <div className="home-first">
            <Header id = "header" className="header"></Header>
              <div className="header_slide">
-                 <div id="slider"></div>
+                 <Slider id="slider"></Slider>
              </div>
         </div>
         <div className="home_first_call">
@@ -89,7 +95,8 @@ function Home(){
                   </div>
 
              </div>
-            <div id="pop_info_detail" className="pop_wrap" s style={{ display: 'none' }}>
+             <div id="pop_info_detail" className="pop_wrap" style={{ display: 'none' }}>
+
                 <div className="pop_inner">
 
                     <h2>약관</h2>
@@ -136,18 +143,18 @@ function Home(){
                <div className="home-second-main-flex2">
                <ul> 
                    <li>
-                       <img src="/img/dawonlogo.png"/>
+                       <img src={dawonlogo}/>
                    </li>
                </ul>
                </div>
            </div>
-               <div id="carlist"></div>
+               <CarList id="carlist"></CarList>
            </div>       
              <div className="sidebab">
                  <div>
-                 <img id="callimg" src="/img/call_img.jpg"  style={{ width: '110px', height: '130px' }}/>
-                 <img id="inquiredimg" src="/img/inquired_img.jpg" onClick="location.href=/requestpage" style={{ width: '110px', height: '130px' }}/>
-                     <img id="talkimg" src="/img/talk_img.jpg"  style={{ width: '110px', height: '130px' }}/>
+                 <img id="callimg" src={call_img}  style={{ width: '110px', height: '130px' }}/>
+                 <img id="inquiredimg" src={inquired_img}style={{ width: '110px', height: '130px' }}/>
+                     <img id="talkimg" src={talk_img} style={{ width: '110px', height: '130px' }}/>
                  </div>
              </div>
            </div>
@@ -157,8 +164,16 @@ function Home(){
           <div className="home-forth">
              <div className="customer_review">
                <div className="review_top">
-                    <p className="review_top_title"><i><span className="title_color">D</span><span className="title_color2">a</span>wonCar</i> 출고후기
-                     <p className="review_top_p">다원카를 선택해주신 고객님들의 후기입니다.</p></p>
+               <div className="review_top_title">
+  <p>
+    <i>
+      <span className="title_color">D</span>
+      <span className="title_color2">a</span>wonCar
+    </i> 출고후기
+  </p>
+  <p className="review_top_p">다원카를 선택해주신 고객님들의 후기입니다.</p>
+</div>
+
                </div>
                <div className="review_main" id="review"></div>
                <div className="review_bottom"></div>
@@ -171,7 +186,7 @@ function Home(){
            <br/>
            <br/>
        </div>
-     <footer id="footer"></footer>
+     <Fotter id="footer"></Fotter>
    </div>
     )
 }
