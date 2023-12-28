@@ -109,8 +109,6 @@ public class CarController {
     @PostMapping("removecar")
     public String remove(AlterCarForm form){
         String cookie = (String) sessionManager.getSession(request);
-        System.out.println(form.getId());
-        System.out.println(form.getCar_number());
         if(cookie.isEmpty()){
             return "/";
         }

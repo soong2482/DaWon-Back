@@ -12,10 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
  import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;;
+import java.io.FileInputStream;
  import javax.servlet.ServletOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,14 @@ public class BannerController {
         model.addAttribute("mainbanner", admihomebanners);
         return "index/imgslider";
     }
+
+    @GetMapping("/api/mainbanner")
+    @ResponseBody
+    public List<AdminHomeBanner> getMainBannerData() {
+    return bannerService.findHome();
+}
+
+
     @GetMapping("centerbanner")
     public String centerbanner(Model model){
         List<AdminCenterBanner> findIndexCenter = bannerService.findIndexCenter();

@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Slider from "../components/HomeSlider";
 import Fotter from '../components/Fotter';
 import CarList from "../components/CarList";
+import CustomerReview from "../components/CusotmerReview";
 import call_img from "../assets/call_img.jpg";
 import talk_img from "../assets/talk_img.jpg";
 import inquired_img from "../assets/inquired_img.jpg";
@@ -22,9 +23,13 @@ function Home(){
         <div className="home-container">
         
         <div className="home-first">
-           <Header id = "header" className="header"></Header>
+           <div id="header" className="header">
+             <Header />
+           </div> 
              <div className="header_slide">
-                 <Slider id="slider"></Slider>
+                <div id="slider">
+                  <Slider/>
+                  </div>
              </div>
         </div>
         <div className="home_first_call">
@@ -148,7 +153,9 @@ function Home(){
                </ul>
                </div>
            </div>
-               <CarList id="carlist"></CarList>
+              <div id="carlist">
+                <CarList/>
+              </div>
            </div>       
              <div className="sidebab">
                  <div>
@@ -175,7 +182,10 @@ function Home(){
 </div>
 
                </div>
-               <div className="review_main" id="review"></div>
+               <div  className="review_main" id="review">
+               <CustomerReview/>
+               </div>
+           
                <div className="review_bottom"></div>
              </div>
           </div>

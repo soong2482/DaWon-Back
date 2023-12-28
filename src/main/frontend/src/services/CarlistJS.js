@@ -10,7 +10,7 @@ function CarlistJS(){
 
   //     // Log values to the console
       console.log('ID:', idValue, 'Field:', fieldValue);
-    window.location.href="request?name="+idValue+"&sort="+fieldValue;
+    window.location.href="requestpage?name="+idValue+"&sort="+fieldValue;
     });
   });
 }

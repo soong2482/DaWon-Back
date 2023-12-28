@@ -18,7 +18,7 @@ body #footer{
 }
 .request_container .request_banner{
   flex-grow: 0.1;
-  background-image: url("/img/new_banner02.jpg");
+  background-image: url("../assets/new_banner02.jpg");
   background-size: cover;
   min-height: 350px;
 }

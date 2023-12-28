@@ -1,27 +1,5 @@
 function requestJS(){
-                var lease = document.getElementById('lease');
-                var rental = document.getElementById('rental');
-                var Target = document.getElementById('clock');
-
-             document.getElementById('lease').addEventListener('click', function () {
-                var leaseCheckbox = document.getElementById('lease');
-                var rentalCheckbox = document.getElementById('rental');
-                var checked = leaseCheckbox.checked;
-            
-                if (checked) {
-                    rentalCheckbox.checked = false;
-                }
-            });
-            
-            document.getElementById('rental').addEventListener('click', function () {
-                var leaseCheckbox = document.getElementById('lease');
-                var rentalCheckbox = document.getElementById('rental');
-                var checked = rentalCheckbox.checked;
-            
-                if (checked) {
-                    leaseCheckbox.checked = false;
-                }
-            });
+  
             function clock() {
                 var time = new Date();
                 var year = time.getFullYear();
@@ -40,8 +18,9 @@ function requestJS(){
                     (minutes < 10 ? '0' + minutes : minutes) + ':' +
                     (seconds < 10 ? '0' + seconds : seconds);
             }
-            async function doum() {
-                var returnValue = confirm('문의신청을 하시겠습니까?');
+            document.querySelector('.submit_button_button').addEventListener('click',async function(e){
+                var returnValue = window.confirm('문의신청을 하시겠습니까?');
+                
                 if (returnValue === true) {
                     var choice;
                     var auth = document.getElementById('auth').value;
@@ -54,7 +33,7 @@ function requestJS(){
                     const region = document.getElementById('region').value;
                     const text = document.getElementById('text').value;
                     const date = document.getElementById('clock').value;
-                    clock();
+               
                     if (agreeCheckbox.checked) {
                         if (rentalCheckbox.checked || leaseCheckbox.checked) {
                             if (rentalCheckbox.checked) {
@@ -101,6 +80,6 @@ function requestJS(){
                 } else {
                     alert("문의신청이 취소되었습니다.");
                 }
-            }
+            })
         }
         export default requestJS;
