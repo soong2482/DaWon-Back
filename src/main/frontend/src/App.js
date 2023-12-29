@@ -2,7 +2,7 @@
 import './App.css';
 import React from 'react';
 import Home from './pages/Home.jsx';
-import TEST from './components/HomeSlider.js'
+import TEST from './pages/test.jsx';
 import Request from './pages/Request.jsx';
 import { Route, Routes } from 'react-router-dom';
 function App() {

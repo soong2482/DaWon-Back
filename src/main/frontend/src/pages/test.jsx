@@ -1,61 +1,12 @@
 import "../styles/request.css";
-import Header from "../components/Header";
-import Fotter from '../components/Fotter';
-import Back from "../assets/back.png";
-import DawonLogo from "../assets/dawonlogo.png";
-
-import {useState,useEffect} from 'react';
-import { useLocation } from 'react-router-dom';
-import requestJS from "../services/requestJS";
-function Request(){
-    const defaultAgreeText = `
-    (주)다원카는 개인정보 관련 법률(개인정보보호법, 정보통신망 이용촉진 및 정보보호에 관한 법률)을 준수하며 수집된 개인정보는 해당 서비스 외에 다른 용도로 절대 사용하지 않습니다. 
-    또한 (주)다원카 콜센터(1599-4436)로 요청 시 제공한 개인정보 삭제 및 동의를 철회하실 수 있습니다.
-    
-    개인정보 수집 및 이용 동의 (필수)
-    1) 수집목적 : 상담신청 및 금융상품 안내
-    2) 수집항목 : (필수) 이름, 연락처, 희망상품, 희망차량
-    3) 보유기간 : 제공일로 부터 1년간
-    4) 상담신청을 위해 필요한 최소한의 개인정보이므로 동의를 해주셔야 서비스를 이용하실 수 있습니다.
-    
-    ※ 고객님은 개인정보 수집·이용에 동의를 거부할 권리가 있으며 단, 동의 거부 시 상담 제공이 불가능합니다.
-      `;
-
-    const location = useLocation();
-
-    // URL 쿼리스트링에서 값을 추출
-    const queryParams = new URLSearchParams(location.search);
-    const initialSort = queryParams.get('sort');
-    const [isCheckedLease, setIsCheckedLease] = useState(initialSort === 'lease');
-  const [isCheckedRent, setIsCheckedRent] = useState(initialSort === 'rent');
-
-  const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    if (name === 'lease') {
-      setIsCheckedLease(checked);
-      setIsCheckedRent(false);
-    } else if (name === 'rental') {
-      setIsCheckedRent(checked);
-      setIsCheckedLease(false);
-    }
-  };
-    const initialName = queryParams.get('name') || '';
-    const [name, setName] = useState(initialName);
-    useEffect(() => {
-        requestJS();
-        const currentSort = queryParams.get('sort');
-        setIsCheckedLease(currentSort === 'lease');
-        setIsCheckedRent(currentSort === 'rent');
-    },[]);
+function test(){
     return(
-        <div>
         <div className="request_container">
-             <input type="hidden" id="clock"/>
-             <div id="header">
-                <Header/>
-            </div>
+        <input type="hidden" id="clock"/>
+            <header id="header"></header>
         <div id="back_img">
-            <img src={Back} alt=""/>
+            <img src="/img/back.png" alt=""/>
+
         </div>
        
         <div className="request_body"> 
@@ -63,8 +14,8 @@ function Request(){
             </div>
             <div className="request_chest">
                <div className="request_img">
-                <img src={DawonLogo}/>
-                </div>
+                <img src="/img/dawonlogo.png"/>
+                 </div>
                 <div className="form_bac">
                 <div className="form_line">
                     <div className="request_form">
@@ -77,8 +28,11 @@ function Request(){
                                     <div className="agreebutton">
                                         리스/렌트 선택<span className="jum">*</span>
                                     <div>
-                                        <span className="light">리스</span><input type="checkbox"     checked={isCheckedLease}  onChange={handleCheckboxChange} name="lease" id="lease" value="리스"/>
-                                        <span className="light">렌트</span> <input type="checkbox"   checked={isCheckedRent} onChange={handleCheckboxChange} name="rental" id="rental" value="렌트"/>
+                                        <span className="light">리스</span><input type="checkbox" name="lease" id="lease" value="리스"/>
+                                        <span className="light">렌트</span> <input type="checkbox" name="rental" id="rental" value="렌트"/>
+                                        
+                                        
+
                                     </div>    
                                     </div>
                                 </div> 
@@ -102,9 +56,9 @@ function Request(){
                                 <div className="form_car_region_left">
                                     <p>희망차량<span className="jum">*</span></p>
                                     <div>
-                                    <input id="carsort"  name="carsort" type="text"   value={name}   onChange={(e) => setName(e.target.value)}  className="form_car_region_car" placeholder="희망차량을 입력해주세요."/>
-                             
+                                    <input id="carsort"  name="carsort" type="text" className="form_car_region_car" placeholder="희망차량을 입력해주세요."/>
                                     </div>
+                                    
                                 </div>
                                 <div className="form_car_region_right">
                                     <p>지역<span className="jum">*</span></p>
@@ -126,7 +80,19 @@ function Request(){
                                      <div className="form_title_2_flex">
                                          <div className="form_title_2_sidebar"></div>
                                     <div className="form_title_2_content">
-					                    <textarea id="agreearea"  defaultValue={defaultAgreeText} style={{resize: false}} readOnly>
+					                    <textarea id="agreearea" style={{resize: false}} readonly>
+
+
+(주)다원카는 개인정보 관련 법률(개인정보보호법, 정보통신망 이용촉진 및 정보보호에 관한 법률)을 준수하며 수집된 개인정보는 해당 서비스 외에 다른 용도로 절대 사용하지 않습니다. 
+또한 (주)다원카 콜센터(1599-4436)로 요청 시 제공한 개인정보 삭제 및 동의를 철회하실 수 있습니다.
+
+개인정보 수집 및 이용 동의 (필수)
+1) 수집목적 : 상담신청 및 금융상품 안내
+2) 수집항목 : (필수) 이름, 연락처, 희망상품, 희망차량
+3) 보유기간 : 제공일로 부터 1년간
+4) 상담신청을 위해 필요한 최소한의 개인정보이므로 동의를 해주셔야 서비스를 이용하실 수 있습니다.
+
+※ 고객님은 개인정보 수집·이용에 동의를 거부할 권리가 있으며 단, 동의 거부 시 상담 제공이 불가능합니다.
 					                    </textarea>
                                     </div>
                                 </div>
@@ -142,7 +108,7 @@ function Request(){
 
                                 </div>
                                 <div className="submit_button_right">
-                                    <button className="submit_button_button">견적신청</button>
+                                    <button className="submit_button_button" onclick="doum()">견적신청</button>
                                 </div>
                              </div>   
                            
@@ -156,12 +122,9 @@ function Request(){
             </div>
         </div>
         
-        <div className="request_footer"> 
-            <Fotter id="footer" />
+        <div className="request_footer"> <footer id="footer"></footer>
         </div>
     </div>
- 
-    </div> 
-    )
+   )
 }
-export default Request;
+export default test;

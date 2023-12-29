@@ -292,8 +292,8 @@ background-size:cover;
     width:28%;
     border: 5px solid rgb(149, 188, 244);
     margin:2%; 
-    min-height:70vh;
-    max-height:70vh;
+    min-height:645px;
+    max-height:645px;
     align-items: left;
     text-align: center;
     justify-content: left;
@@ -482,9 +482,7 @@ html, body {
 .home-first .header_img img{
     min-height: 150px;
 }
-  .form_bac{
-    display: none;
-  }
+
 .car_list .logo{
     font-size: x-small;
 }
@@ -572,9 +570,7 @@ html, body {
 .home-first .header_img img{
     min-height: 150px;
 }
-  .form_bac{
-    display: none;
-  }
+
 .car_list .logo{
     font-size: x-small;
 }
@@ -753,9 +749,7 @@ html, body {
 .home-first .header_img img{
     min-height: 150px;
 }
-  .form_bac{
-    display: none;
-  }
+
 .car_list .logo{
     font-size: x-small;
 }
@@ -785,7 +779,7 @@ html, body {
     display:none;
 }
 }
-@media (max-width: 1200px) and (min-width:951px) {\
+@media (max-width: 1200px) and (min-width:951px) {
 	 .home-second .sidebar{
      display: none;
    }
