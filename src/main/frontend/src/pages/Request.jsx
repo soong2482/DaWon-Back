@@ -1,6 +1,6 @@
 import "../styles/request.css";
-import Header from "../components/Header";
-import Fotter from '../components/Fotter';
+import Header from "../hooks/Header";
+import Fotter from '../hooks/Fotter';
 import Back from "../assets/back.png";
 import DawonLogo from "../assets/dawonlogo.png";
 
