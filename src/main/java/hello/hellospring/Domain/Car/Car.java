@@ -1,11 +1,11 @@
-package hello.hellospring.Domain;
+package hello.hellospring.Domain.Car;
 
 
 public class Car {
 
     private Long car_code;
     private String master_car_name;
-    private Long master_car_code;
+    private Long master_car_order;
 
     //car_price
     private String car_lease_price;
@@ -41,13 +41,7 @@ public class Car {
         this.master_car_name = master_car_name;
     }
 
-    public Long getMaster_car_code() {
-        return master_car_code;
-    }
 
-    public void setMaster_car_code(Long master_car_code) {
-        this.master_car_code = master_car_code;
-    }
 
     public String getCar_lease_price() {
         return car_lease_price;
@@ -103,5 +97,13 @@ public class Car {
 
     public void setCar_option_lease_price(String car_option_lease_price) {
         this.car_option_lease_price = car_option_lease_price;
+    }
+
+    public Long getMaster_car_order() {
+        return master_car_order;
+    }
+
+    public void setMaster_car_order(Long master_car_order) {
+        this.master_car_order = master_car_order;
     }
 }

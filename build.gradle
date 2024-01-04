@@ -17,8 +17,7 @@ bootJar {
 dependencies {
 	implementation 'org.jetbrains:annotations:24.0.0'
     implementation 'org.projectlombok:lombok:1.18.26'
-	implementation 'org.springframework:spring-core:5.3.9'
-	implementation 'org.springframework:spring-jdbc:5.3.9'
+
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
 	implementation 'org.mybatis:mybatis:3.5.8'
 	implementation 'org.mariadb.jdbc:mariadb-java-client'

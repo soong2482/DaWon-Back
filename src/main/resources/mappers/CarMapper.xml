@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="hello.hellospring.Mapper.CarMapper">
 
-    <select id="listCar" resultType="hello.hellospring.Domain.Car">
+<mapper namespace="hello.hellospring.Mapper.CarMapper">
+<!--    <select id="TESTCAR" resultType="hello.hellospring.Domain.Car.Car">-->
+<!--        SELECT-->
+<!--        master_car.*,-->
+<!--        car_trim.car_trim_name,-->
+<!--        car_price.car_lease_price,-->
+<!--        car_price.car_rent_price,-->
+<!--        car_img.car_img,-->
+<!--        car_img.car_brand_img,-->
+<!--        car_option.car_option,-->
+<!--        car_option.car_option_lease_price-->
+<!--        FROM-->
+<!--        master_car-->
+<!--        LEFT JOIN car_price ON master_car.car_code = car_price.car_code-->
+<!--        LEFT JOIN car_img ON master_car.car_code = car_price.car_code-->
+<!--        LEFT JOIN car_trim ON master_car.car_code = car_trim.car_code-->
+<!--        LEFT JOIN car_option ON car_trim.car_trim_name = car_option.car_trim_name AND master_car.car_code = car_option.car_code-->
+<!--        WHERE-->
+<!--        master_car.master_car_name = 'A_CAR'-->
+<!--        LIMIT 200-->
+<!--    </select>-->
+
+    <select id="HomeListCar" resultType="hello.hellospring.Domain.Car.CarList">
         SELECT
         master_car.*,
-        car_trim.car_trim_name,
         car_price.car_lease_price,
         car_price.car_rent_price,
         car_img.car_img,
-        car_img.car_brand_img,
-        car_option.car_option,
-        car_option.car_option_lease_price
+        car_img.car_brand_img
         FROM
         master_car
-        LEFT JOIN car_price ON master_car.car_code = car_price.car_code
-        LEFT JOIN car_img ON master_car.car_code = car_price.car_code
-        LEFT JOIN car_trim ON master_car.car_code = car_trim.car_code
-        LEFT JOIN car_option ON car_trim.car_trim_name = car_option.car_trim_name AND master_car.car_code = car_option.car_code
-        WHERE
-        master_car.master_car_name = 'A_CAR'
-        LIMIT 200
+        LEFT JOIN
+        car_price ON master_car.car_code = car_price.car_code
+        LEFT JOIN
+        car_img ON master_car.car_code = car_img.car_code
+        ORDER BY
+        master_car.master_car_order ASC
+        LIMIT 18;
+
     </select>
+
+    <select id="RecommendListCar"></select>
 </mapper>
 

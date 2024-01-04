@@ -1,7 +1,8 @@
 package hello.hellospring.Controller;
 
 
-import hello.hellospring.Domain.Car;
+import hello.hellospring.Domain.Car.Car;
+import hello.hellospring.Domain.Car.CarList;
 import hello.hellospring.Service.CarService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/listCar")
     @ResponseBody
-    public List<Car> getAllCar(){
-        return carService.getList();
+    public List<CarList> ListCar(){
+        return carService.getHomeList();
     }
 }
