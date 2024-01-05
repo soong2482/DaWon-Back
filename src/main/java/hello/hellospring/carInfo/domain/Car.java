@@ -3,107 +3,102 @@ package hello.hellospring.carInfo.domain;
 
 public class Car {
 
-    private Long car_code;
-    private String master_car_name;
-    private Long master_car_order;
+    private Long carCode;
+    private String masterCarName;
+    private Long masterCarOrder;
 
     //car_price
-    private String car_lease_price;
-    private String car_rent_price;
+    private String carLeasePrice;
+    private String carRentPrice;
 
     //car_trim
-    private String car_trim_name;
+    private String carTrimName;
 
     //car_img
-    private String car_img;
-    private String car_brand_img;
+    private String carImg;
+    private String carBrandImg;
 
     //car_option
-    private String car_option;
-    private String car_option_lease_price;
+    private String carOption;
+    private String carOptionLeasePrice;
 
-
-
-    //getter-setter
-    public Long getCar_code() {
-        return car_code;
+    public Long getCarCode() {
+        return carCode;
     }
 
-    public void setCar_code(Long car_code) {
-        this.car_code = car_code;
+    public void setCarCode(Long carCode) {
+        this.carCode = carCode;
     }
 
-    public String getMaster_car_name() {
-        return master_car_name;
+    public String getMasterCarName() {
+        return masterCarName;
     }
 
-    public void setMaster_car_name(String master_car_name) {
-        this.master_car_name = master_car_name;
+    public void setMasterCarName(String masterCarName) {
+        this.masterCarName = masterCarName;
     }
 
-
-
-    public String getCar_lease_price() {
-        return car_lease_price;
+    public Long getMasterCarOrder() {
+        return masterCarOrder;
     }
 
-    public void setCar_lease_price(String car_lease_price) {
-        this.car_lease_price = car_lease_price;
+    public void setMasterCarOrder(Long masterCarOrder) {
+        this.masterCarOrder = masterCarOrder;
     }
 
-    public String getCar_rent_price() {
-        return car_rent_price;
+    public String getCarLeasePrice() {
+        return carLeasePrice;
     }
 
-    public void setCar_rent_price(String car_rent_price) {
-        this.car_rent_price = car_rent_price;
+    public void setCarLeasePrice(String carLeasePrice) {
+        this.carLeasePrice = carLeasePrice;
     }
 
-    public String getCar_trim_name() {
-        return car_trim_name;
+    public String getCarRentPrice() {
+        return carRentPrice;
     }
 
-    public void setCar_trim_name(String car_trim_name) {
-        this.car_trim_name = car_trim_name;
+    public void setCarRentPrice(String carRentPrice) {
+        this.carRentPrice = carRentPrice;
     }
 
-    public String getCar_img() {
-        return car_img;
+    public String getCarTrimName() {
+        return carTrimName;
     }
 
-    public void setCar_img(String car_img) {
-        this.car_img = car_img;
+    public void setCarTrimName(String carTrimName) {
+        this.carTrimName = carTrimName;
     }
 
-    public String getCar_brand_img() {
-        return car_brand_img;
+    public String getCarImg() {
+        return carImg;
     }
 
-    public void setCar_brand_img(String car_brand_img) {
-        this.car_brand_img = car_brand_img;
+    public void setCarImg(String carImg) {
+        this.carImg = carImg;
     }
 
-    public String getCar_option() {
-        return car_option;
+    public String getCarBrandImg() {
+        return carBrandImg;
     }
 
-    public void setCar_option(String car_option) {
-        this.car_option = car_option;
+    public void setCarBrandImg(String carBrandImg) {
+        this.carBrandImg = carBrandImg;
     }
 
-    public String getCar_option_lease_price() {
-        return car_option_lease_price;
+    public String getCarOption() {
+        return carOption;
     }
 
-    public void setCar_option_lease_price(String car_option_lease_price) {
-        this.car_option_lease_price = car_option_lease_price;
+    public void setCarOption(String carOption) {
+        this.carOption = carOption;
     }
 
-    public Long getMaster_car_order() {
-        return master_car_order;
+    public String getCarOptionLeasePrice() {
+        return carOptionLeasePrice;
     }
 
-    public void setMaster_car_order(Long master_car_order) {
-        this.master_car_order = master_car_order;
+    public void setCarOptionLeasePrice(String carOptionLeasePrice) {
+        this.carOptionLeasePrice = carOptionLeasePrice;
     }
 }

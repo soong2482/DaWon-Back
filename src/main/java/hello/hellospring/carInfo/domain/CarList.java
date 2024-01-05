@@ -1,80 +1,79 @@
 package hello.hellospring.carInfo.domain;
 
 public class CarList {
-    private Long CarCode;
-    private String MasterCarName;
-    private Long MasterCarOrder;
-    private String MasterCarRecommend;
+    private Long carCode;
+    private String masterCarName;
+    private Long masterCarOrder;
+    private String masterCarRecommend;
     //car_price
-    private String CarLeasePrice;
-    private String CarRentPrice;
+    private String carLeasePrice;
+    private String carRentPrice;
 
     //car_img
-    private String CarImg;
-    private String CarBrandImg;
-
+    private String carImg;
+    private String carBrandImg;
 
     public Long getCarCode() {
-        return CarCode;
+        return carCode;
     }
 
     public void setCarCode(Long carCode) {
-        CarCode = carCode;
+        this.carCode = carCode;
     }
 
     public String getMasterCarName() {
-        return MasterCarName;
+        return masterCarName;
     }
 
     public void setMasterCarName(String masterCarName) {
-        MasterCarName = masterCarName;
+        this.masterCarName = masterCarName;
     }
 
     public Long getMasterCarOrder() {
-        return MasterCarOrder;
+        return masterCarOrder;
     }
 
     public void setMasterCarOrder(Long masterCarOrder) {
-        MasterCarOrder = masterCarOrder;
+        this.masterCarOrder = masterCarOrder;
     }
 
     public String getMasterCarRecommend() {
-        return MasterCarRecommend;
+        return masterCarRecommend;
     }
 
     public void setMasterCarRecommend(String masterCarRecommend) {
-        MasterCarRecommend = masterCarRecommend;
-    }
-
-    public String getCarRentPrice() {
-        return CarRentPrice;
-    }
-
-    public void setCarRentPrice(String carRentPrice) {
-        CarRentPrice = carRentPrice;
+        this.masterCarRecommend = masterCarRecommend;
     }
 
     public String getCarLeasePrice() {
-        return CarLeasePrice;
+        return carLeasePrice;
     }
 
     public void setCarLeasePrice(String carLeasePrice) {
-        CarLeasePrice = carLeasePrice;
+        this.carLeasePrice = carLeasePrice;
+    }
+
+    public String getCarRentPrice() {
+        return carRentPrice;
+    }
+
+    public void setCarRentPrice(String carRentPrice) {
+        this.carRentPrice = carRentPrice;
     }
 
     public String getCarImg() {
-        return CarImg;
+        return carImg;
     }
 
     public void setCarImg(String carImg) {
-        CarImg = carImg;
+        this.carImg = carImg;
     }
 
     public String getCarBrandImg() {
-        return CarBrandImg;
+        return carBrandImg;
     }
 
     public void setCarBrandImg(String carBrandImg) {
-        CarBrandImg = carBrandImg;
+        this.carBrandImg = carBrandImg;
     }
 }
