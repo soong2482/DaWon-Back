@@ -1,5 +1,6 @@
 package hello.hellospring.common.config;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,13 +12,10 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import javax.sql.DataSource;
 
 @Configuration
+@RequiredArgsConstructor
 public class MybatisConfig {
 
     private final DataSource dataSource;
-
-    public MybatisConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     @Bean("sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory() throws Exception {
