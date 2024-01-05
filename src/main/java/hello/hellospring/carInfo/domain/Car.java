@@ -1,4 +1,4 @@
-package hello.hellospring.Domain.Car;
+package hello.hellospring.carInfo.domain;
 
 
 public class Car {

@@ -1,8 +1,7 @@
-package hello.hellospring.Service;
+package hello.hellospring.carInfo.service;
 
-import hello.hellospring.Domain.Car.CarList;
-import hello.hellospring.Mapper.CarMapper;
-import hello.hellospring.Domain.Car.Car;
+import hello.hellospring.carInfo.domain.CarList;
+import hello.hellospring.carInfo.mapper.CarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package hello.hellospring.Mapper;
+package hello.hellospring.carInfo.mapper;
 
-import hello.hellospring.Domain.Car.CarList;
+import hello.hellospring.carInfo.domain.CarList;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
