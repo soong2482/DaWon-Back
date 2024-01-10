@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 로그파일 저장 경로 -->
+    <property name="LOG_DIR" value="../logs" />
+
+    <!-- CONSOLE -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} : %30logger{5} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- SYSLOG -->
+    <appender name="APPLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/application_dawon.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                [%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|${hostName}|${instanceName}|%logger{36}:%file:%method:%line]\t%msg%n
+            </Pattern>
+        </layout>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archive/application_dawon.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="APPLOG" />
+    </root>
+    <logger name="hello.hellospring" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+
+</configuration>
