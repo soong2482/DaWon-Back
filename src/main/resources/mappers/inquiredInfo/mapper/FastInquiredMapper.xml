@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hello.hellospring.inquiredInfo.mapper.FastInquiredMapper">
+    <insert id="InsertFastInquired" parameterType="hello.hellospring.inquiredInfo.domain.FastInquired">
+        INSERT INTO customer_fastinquired (
+        customer_f_name,
+        customer_f_phone,
+        customer_f_brand,
+        customer_f_carsort,
+        customer_f_auth,
+        customer_f_success,
+        customer_f_date)
+        VALUES(
+        #{customerFName},
+        #{customerFPhone},
+        #{customerFBrand},
+        #{customerFCarSort},
+        #{customerFAuth},
+        #{customerFSuccess},
+        #{customerFDate})
+    </insert>
+    <select id="getLastId" resultType="java.lang.Long">
+        SELECT COALESCE(MAX(customer_f_id), 0) FROM customer_fastinquired;
+    </select>
+    <select id="getFastInquiredList" resultType="hello.hellospring.inquiredInfo.domain.FastInquired">
+        SELECT * FROM customer_fastinquired
+    </select>
+    <delete id="DeleteFastInquired">
+        DELETE FROM customer_fastinquired
+        WHERE customer_f_id=#{id}
+    </delete>
+    <update id="SuccessFastInquired">
+        UPDATE customer_fastinquired
+        SET customer_f_success = not customer_f_success
+        WHERE customer_f_id = #{id}
+    </update>
+</mapper>

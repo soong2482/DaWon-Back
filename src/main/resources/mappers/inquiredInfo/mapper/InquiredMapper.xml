@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hello.hellospring.inquiredInfo.mapper.InquiredMapper">
+    <insert id="InsertInquired" parameterType="hello.hellospring.inquiredInfo.domain.Inquired">
+        INSERT INTO CUSTOMER_INQUIRED (
+        customer_id,
+        customer_name,
+        customer_phone,
+        customer_choice,
+        customer_region,
+        customer_carsort,
+        customer_auth,
+        customer_success,
+        customer_date,
+        customer_text)
+        VALUES(
+        #{customerId},
+        #{customerName},
+        #{customerPhone},
+        #{customerChoice},
+        #{customerRegion},
+        #{customerCarSort},
+        #{customerAuth},
+        #{customerSuccess},
+        #{customerDate},
+        #{customerText})
+    </insert>
+    <select id="getLastId" resultType="java.lang.Long">
+        SELECT COALESCE(MAX(customer_id), 0) FROM customer_inquired;
+    </select>
+    <select id ="getInquiredList" resultType="hello.hellospring.inquiredInfo.domain.Inquired">
+        select * from customer_inquired
+    </select>
+    <delete id="DeleteInquired">
+        DELETE FROM customer_inquired
+        WHERE customer_id=#{id};
+    </delete>
+    <update id="SuccessInquired">
+        UPDATE customer_inquired
+        SET customer_success = not customer_success
+        WHERE customer_id = #{id}
+    </update>
+</mapper>

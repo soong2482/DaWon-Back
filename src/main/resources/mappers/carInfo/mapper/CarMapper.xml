@@ -2,46 +2,157 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="hello.hellospring.carInfo.mapper.CarMapper">
-<!--    <select id="TESTCAR" resultType="hello.hellospring.carInfo.domain.Car">-->
+    <!--======================================================INSERT=========================================================-->
+
+        <insert id="InsertMasterCar" parameterType="hello.hellospring.carInfo.domain.Insert.MasterCar">
+                INSERT INTO MASTER_CAR (car_code,master_car_name,master_car_order,master_car_recommend)
+                VALUES(#{carCode},#{masterCarName},#{masterCarOrder},#{masterCarRecommend})
+        </insert>
+        <insert id="InsertTrim" parameterType="hello.hellospring.carInfo.domain.Insert.CarTrim">
+                INSERT INTO CAR_TRIM (car_code,car_trim_name,car_trim_price)
+                VALUES(#{carCode},#{carTrimName},#{carTrimPrice})
+        </insert>
+        <insert id="InsertPrice" parameterType="hello.hellospring.carInfo.domain.Insert.CarPrice">
+                INSERT INTO CAR_PRICE (car_code,car_lease_price,car_rent_price)
+                VALUES(#{carCode},#{carLeasePrice},#{carRentPrice})
+        </insert>
+        <insert id="InsertImg" parameterType="hello.hellospring.carInfo.domain.Insert.CarImg">
+                INSERT INTO CAR_IMG (car_code,car_img,car_brand_img)
+                VALUES(#{carCode},#{carImg},#{carBrandImg})
+        </insert>
+        <insert id="InsertOption" parameterType="hello.hellospring.carInfo.domain.Insert.CarOption">
+                INSERT INTO CAR_OPTION (car_option,car_code,car_trim_name,car_option_lease_price)
+                VALUES(#{carOption},#{carCode},#{carTrimName},#{carOptionLeasePrice})
+        </insert>
+
+
+<!--=======================================================SELECT========================================================-->
+    <select id="AdminlistCar" resultType="hello.hellospring.carInfo.domain.Select.CarList">
+        SELECT master_car.car_code
+        , master_car.master_car_name
+        , master_car.master_car_order
+        , master_car.master_car_recommend
+        , car_price.car_lease_price
+        , car_price.car_rent_price
+        , car_img.car_img
+        , car_img.car_brand_img
+        FROM master_car
+        LEFT OUTER JOIN car_price
+        ON master_car.car_code = car_price.car_code
+        LEFT OUTER JOIN car_img
+        ON master_car.car_code = car_img.car_code
+        ORDER BY master_car.master_car_order ASC
+    </select>
+    <select id ="CarTrim" resultType="hello.hellospring.carInfo.domain.Insert.CarTrim">
+        select *
+        from car_trim
+        where car_trim.car_code = #{carCode};
+    </select>
+
+    <select id="CarOption" resultType="hello.hellospring.carInfo.domain.Insert.CarOption">
+        select *
+        from car_option
+        where car_trim_name = #{carTrimName}
+        AND CAR_CODE =#{carCode};
+    </select>
+    <select id="HomeListCar" resultType="hello.hellospring.carInfo.domain.Select.CarList">
+        SELECT
+        master_car.*,
+        car_price.car_lease_price,
+        car_price.car_rent_price,
+        car_img.car_img,
+        car_img.car_brand_img
+        FROM master_car
+        LEFT OUTER JOIN car_price ON master_car.car_code = car_price.car_code
+        LEFT OUTER JOIN car_img ON master_car.car_code = car_img.car_code
+        ORDER BY master_car.master_car_order ASC
+        LIMIT 18;
+
+    </select>
+    <select id="getCarCode" resultType="java.lang.Long">
+        select  COALESCE(MAX(car_code), 0) from master_car;
+    </select>
+    <select id="getCarCodeFromOrder" resultType="java.lang.Long">
+        select car_code from master_car where master_car_order =#{ChangeCarOrder};
+    </select>
+    <select id="getLastCarOrder" resultType="java.lang.String">
+        select  COALESCE(MAX(master_car_order), 0) from master_car;
+    </select>
+    <select id="RecommendListCar" resultType="hello.hellospring.carInfo.domain.Select.CarRecommendList">
+        SELECT
+        master_car.*,
+        car_price.car_lease_price,
+        car_price.car_rent_price,
+        car_img.car_img,
+        car_img.car_brand_img
+        FROM
+        master_car
+        LEFT OUTER JOIN
+        car_price ON master_car.car_code = car_price.car_code
+        LEFT OUTER JOIN
+        car_img ON master_car.car_code = car_img.car_code
+        WHERE
+        master_car.master_car_recommend = true
+        ORDER BY
+        master_car.master_car_order ASC
+    </select>
+
+<!--    <select id="DetailListCar" resultType="hello.hellospring.carInfo.domain.Select.CarDetailList">-->
 <!--        SELECT-->
 <!--        master_car.*,-->
-<!--        car_trim.car_trim_name,-->
 <!--        car_price.car_lease_price,-->
 <!--        car_price.car_rent_price,-->
 <!--        car_img.car_img,-->
 <!--        car_img.car_brand_img,-->
+<!--        car_trim.car_trim_name,-->
+<!--        car_trim.car_trim_price,-->
 <!--        car_option.car_option,-->
 <!--        car_option.car_option_lease_price-->
 <!--        FROM-->
 <!--        master_car-->
-<!--        LEFT JOIN car_price ON master_car.car_code = car_price.car_code-->
-<!--        LEFT JOIN car_img ON master_car.car_code = car_price.car_code-->
-<!--        LEFT JOIN car_trim ON master_car.car_code = car_trim.car_code-->
-<!--        LEFT JOIN car_option ON car_trim.car_trim_name = car_option.car_trim_name AND master_car.car_code = car_option.car_code-->
+<!--        LEFT OUTER JOIN-->
+<!--        car_price ON master_car.car_code = car_price.car_code-->
+<!--        LEFT OUTER JOIN-->
+<!--        car_img ON master_car.car_code = car_img.car_code-->
+<!--        LEFT OUTER JOIN-->
+<!--        car_trim ON master_car.car_code = car_trim.car_code-->
+<!--        LEFT OUTER JOIN-->
+<!--        car_option ON master_car.car_code = car_option.car_code-->
 <!--        WHERE-->
-<!--        master_car.master_car_name = 'A_CAR'-->
-<!--        LIMIT 200-->
+<!--        master_car.master_car_name= #{Car_Name};-->
 <!--    </select>-->
+    <!--=================================================UPDATE===========================================================-->
+    <update id="UpdateCarPrice">
+        UPDATE car_price
+        SET car_lease_price = #{carPrice}
+        WHERE car_code = #{carCode}
+    </update>
+    <update id="UpdateCarOrder">
+        UPDATE master_car
+         SET master_car_order = #{carOrder}
+         WHERE car_code = #{carCode};
+    </update>
 
-    <select id="HomeListCar" resultType="hello.hellospring.carInfo.domain.CarList">
-        SELECT master_car.car_code
-             , master_car.master_car_name
-             , master_car.master_car_order
-             , master_car.master_car_recommend
-             , car_price.car_lease_price
-             , car_price.car_rent_price
-             , car_img.car_img
-             , car_img.car_brand_img
-          FROM master_car
-          LEFT OUTER JOIN car_price
-            ON master_car.car_code = car_price.car_code
-          LEFT OUTER JOIN car_img
-            ON master_car.car_code = car_img.car_code
-         ORDER BY master_car.master_car_order ASC
-        LIMIT 18;
+    <update id="UpdateRecommendCar">
+        UPDATE master_car
+        SET master_car_recommend  = not master_car_recommend
+        WHERE car_code = #{carCode};
+    </update>
 
-    </select>
-
-    <select id="RecommendListCar"></select>
+    <!--=================================================DELETE=======================================================-->
+    <delete id="CarOptionDelete">
+        DELETE FROM CAR_OPTION
+        WHERE CAR_OPTION=#{carOption}
+        AND CAR_CODE=#{carCode};
+    </delete>
+    <delete id="CarTrimDelete">
+        DELETE FROM CAR_TRIM
+        WHERE CAR_TRIM_NAME=#{carTrimName}
+        AND CAR_CODE=#{carCode};
+    </delete>
+    <delete id="CarDelete">
+        DELETE FROM master_car
+        WHERE car_code=#{carCode};
+    </delete>
 </mapper>
 

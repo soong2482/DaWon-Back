@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hello.hellospring.bannerInfo.mapper.BannerMapper">
+    <!--======================================================INSERT=========================================================-->
+
+        <insert id="InsertCenterBanner" parameterType="hello.hellospring.bannerInfo.domain.CenterBanner">
+            INSERT INTO center_banner (center_banner_name,center_banner_imgURL,center_banner_look)
+            VALUES(#{centerBannerName},#{centerBannerImgURL},#{centerBannerLook})
+        </insert>
+
+        <insert id="InsertHomeBanner" parameterType="hello.hellospring.bannerInfo.domain.HomeBanner">
+            INSERT INTO home_banner (home_banner_name,home_banner_imgURL,home_banner_order)
+            VALUES(#{homeBannerName},#{homeBannerImgURL},#{homeBannerOrder})
+        </insert>
+
+
+<!--=======================================================SELECT========================================================-->
+    <select id="CenterBanner" resultType="hello.hellospring.bannerInfo.domain.CenterBanner">
+        SELECT * FROM center_banner order by center_banner_code desc;
+    </select>
+
+    <select id="HomeBanner" resultType="hello.hellospring.bannerInfo.domain.HomeBanner">
+        SELECT * FROM home_banner order by home_banner_order asc;
+    </select>
+
+    <select id="CenterBannerHome" resultType="hello.hellospring.bannerInfo.domain.CenterBanner">
+        SELECT * FROM center_banner where center_banner_look=true;
+    </select>
+    <select id="getLastOrder" resultType="java.lang.Long">
+        select COALESCE(MAX(home_banner_order), 0) from home_banner;
+    </select>
+
+    <!--=================================================UPDATE===========================================================-->
+    <update id="UpdateCenterBanner">
+        UPDATE center_Banner set center_banner_look = false
+    </update>
+    <update id="UpdateCenterBannerLook">
+        UPDATE center_banner set center_banner_look= true where center_banner_code = #{CenterBannerCode};
+    </update>
+
+    <update id="UpdateHomeBannerOrder">
+        UPDATE home_banner set home_banner_order = #{ChangeHomeBannerCode} where home_banner_code = #{HomeBannerCode};
+    </update>
+
+    <update id="UpdateDeleteHomeBanner">
+        UPDATE home_banner set home_Banner_Order = home_Banner_Order - 1
+        where home_Banner_Order >
+        (SELECT home_Banner_Order FROM home_banner WHERE home_Banner_Code = #{HomeBannerCode});
+    </update>
+    <!--=================================================DELETE=======================================================-->
+    <delete id="DeleteCenterBanner">
+        DELETE FROM center_banner
+        WHERE center_banner_code=#{CenterBannerCode};
+    </delete>
+
+    <delete id="DeleteHomeBanner">
+        DELETE FROM home_banner
+        WHERE home_banner_code=#{HomeBannerCode};
+    </delete>
+
+</mapper>
+

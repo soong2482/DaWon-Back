@@ -1,9 +1,12 @@
-package hello.hellospring.carInfo.domain;
+package hello.hellospring.carInfo.domain.Select;
+
+
 
 import lombok.Data;
 
 @Data
-public class Car {
+
+public class CarDetailList {
     private Long carCode;
     private String masterCarName;
     private Long masterCarOrder;

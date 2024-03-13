@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hello.hellospring.reviewInfo.mapper.ReviewMapper">
+    <!--======================================================INSERT=========================================================-->
+
+    <insert id="InsertReview" parameterType="hello.hellospring.reviewInfo.domain.Review">
+        INSERT INTO customer_review (customer_review_brand, customer_review_textarea,customer_review_imgURL
+        ,customer_review_carsort,customer_review_price,customer_review_title,customer_review_date,customer_review_order)
+        VALUES(#{customerReviewBrand},#{customerReviewTextarea},#{customerReviewImgURL},#{customerReviewCarsort},
+        #{customerReviewPrice},#{customerReviewTitle},#{customerReviewDate},#{customerReviewOrder})
+    </insert>
+
+
+    <!--=======================================================SELECT========================================================-->
+    <select id="Review" resultType="hello.hellospring.reviewInfo.domain.Review">
+        SELECT * FROM customer_review order by customer_review_order asc;
+    </select>
+
+    <select id="getLastOrder" resultType="java.lang.Long">
+        SELECT COALESCE(MAX(customer_review_order), 0) from customer_review;
+    </select>
+
+
+    <!--=================================================UPDATE===========================================================-->
+    <update id="UpdateReview">
+        update customer_review set customer_review_textarea = #{customerReviewTextarea} where customer_review_code = #{customerReviewCode};
+    </update>
+
+    <update id="ChangeReviewOrder">
+        UPDATE customer_review set customer_review_order = #{customerReviewOrder} where customer_review_code = #{customerReviewCode};
+    </update>
+
+
+    <!--=================================================DELETE=======================================================-->
+    <delete id="DeleteReview">
+        DELETE FROM customer_review
+        WHERE customer_review_code=#{customerReviewCode};
+    </delete>
+
+
+</mapper>
+

@@ -1,16 +1,12 @@
 package hello.hellospring.carInfo.controller;
-
-
-import hello.hellospring.carInfo.domain.CarList;
+import hello.hellospring.carInfo.domain.Insert.CarOption;
+import hello.hellospring.carInfo.domain.Insert.CarTrim;
+import hello.hellospring.carInfo.domain.Select.CarList;
+import hello.hellospring.carInfo.mapper.CarMapper;
 import hello.hellospring.carInfo.service.CarService;
-
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,11 +15,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarController {
 
+    @Value("${DaWonCar.backEndPoint}")
+    private String BackEndpoint;
+    //    ${DaWonCar.backEndPoint}/
+
+    private final CarMapper carMapper;
     private final CarService carService;
 
-    @GetMapping("/listCar")
+    @GetMapping("${DaWonCar.backEndPoint}/listCar")
     @ResponseBody
     public List<CarList> ListCar(){
         return carService.getHomeList();
     }
+
+    @GetMapping("${DaWonCar.backEndPoint}/GetTrim")
+    @ResponseBody
+    public List<CarTrim> ListCarTrim(@RequestHeader("CarCode")  Long CarCode){ return carService.getListCarTrim(CarCode);}
+
+    @GetMapping("${DaWonCar.backEndPoint}/GetOption")
+    @ResponseBody
+    public List<CarOption> ListCarOption(@RequestHeader("CarCode") Long CarCode ,@RequestHeader("CarTrimName")  String CarTrimName){
+        return carService.getListCaroption(CarCode,CarTrimName);}
+
+
+    @GetMapping("${DaWonCar.backEndPoint}/RecommendListCar")
+    @ResponseBody
+    public List<CarList> RecommendListCar(){ return carService.getRecommendList();}
 }
