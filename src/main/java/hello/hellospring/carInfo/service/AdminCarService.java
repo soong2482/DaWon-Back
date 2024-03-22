@@ -8,15 +8,26 @@ import hello.hellospring.carInfo.mapper.CarMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminCarService {
     private final CarMapper carMapper;
+
+    @Value("${custom.genFileDirPath}")
+    private String uploadDir;
 
     public String insertMasterCar(AddCar addCar) {
         try {
@@ -25,7 +36,8 @@ public class AdminCarService {
             MasterCar masterCar = new MasterCar();
             masterCar.setCarCode(carCode);
             masterCar.setMasterCarName(addCar.getMasterCarName());
-            masterCar.setMasterCarOrder(carMapper.getLastCarOrder() + 1);
+            masterCar.setMasterCarBrandName(addCar.getCarBrandName());
+            masterCar.setMasterCarOrder(Long.parseLong(carMapper.getLastCarOrder())+1);
             masterCar.setMasterCarRecommend(false);
             carMapper.InsertMasterCar(masterCar);
             log.info("Inserted Master Car Successfully");
@@ -36,21 +48,7 @@ public class AdminCarService {
         }
     }
 
-    public String insertTr(Long carCode) {
-        try {
-            log.info("Inserting Trim");
-            CarTrim carTrim = new CarTrim();
-            carTrim.setCarCode(carCode);
-            carTrim.setCarTrimName("NORMAL");
-            carTrim.setCarTrimPrice("0");
-            carMapper.InsertTrim(carTrim);
-            log.info("Inserted Trim Successfully");
-            return "Success";
-        } catch (Exception e) {
-            log.error("Failed to insert Trim", e);
-            return "Failed";
-        }
-    }
+
 
     public String insertPrice(Long carCode, AddCar addCar) {
         try {
@@ -68,13 +66,13 @@ public class AdminCarService {
         }
     }
 
-    public String insertImg(Long carCode, AddCar addCar) {
+    public String insertImg(Long carCode, AddCar addCar,MultipartFile file) {
         try {
             log.info("Inserting Image");
+            String imgName =UploadFile(file);
             CarImg carImg = new CarImg();
             carImg.setCarCode(carCode);
-            carImg.setCarImg(addCar.getCarImg());
-            carImg.setCarBrandImg(addCar.getCarBrandImg());
+            carImg.setCarImg("/Car/"+imgName);
             carMapper.InsertImg(carImg);
             log.info("Inserted Image Successfully");
             return "Success";
@@ -83,7 +81,53 @@ public class AdminCarService {
             return "Failed";
         }
     }
-
+    public String insertBrand(MultipartFile file,String masterCarBrandName) throws IOException{
+        try{
+            log.info("UploadFile-CarBrand");
+            Path uploadPath = Paths.get(uploadDir + "/CarBrand");
+            LocalDateTime currentTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String extension = "";
+            int dotIndex = file.getOriginalFilename().lastIndexOf('.');
+            if (dotIndex > 0 && dotIndex < file.getOriginalFilename().length() - 1) {
+                extension = file.getOriginalFilename().substring(dotIndex);
+            }
+            String fileName = currentTime.format(formatter)+ "_" + extension;
+            Path filePath = uploadPath.resolve(fileName);
+            byte[] bytes = file.getBytes();
+            Files.write(filePath, bytes);
+            CarBrand carBrand = new CarBrand();
+            carBrand.setCarBrandImg("/CarBrand/"+fileName);
+            carBrand.setMasterCarBrandName(masterCarBrandName);
+            carMapper.InsertBrand(carBrand);
+            log.info("Inserted Brand Successfully");
+            return "Success";
+        } catch (Exception e) {
+            log.error("Failed to insert Brand", e);
+            return "Failed";
+        }
+    }
+    private String UploadFile(MultipartFile file) throws IOException {
+        try {
+            log.info("UploadFile-Car");
+            Path uploadPath = Paths.get(uploadDir + "/Car");
+            LocalDateTime currentTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String extension = "";
+            int dotIndex = file.getOriginalFilename().lastIndexOf('.');
+            if (dotIndex > 0 && dotIndex < file.getOriginalFilename().length() - 1) {
+                extension = file.getOriginalFilename().substring(dotIndex);
+            }
+            String fileName = currentTime.format(formatter) + "_" + extension;
+            Path filePath = uploadPath.resolve(fileName);
+            byte[] bytes = file.getBytes();
+            Files.write(filePath, bytes);
+            return fileName;
+        } catch (IOException e) {
+            log.error("Failed to upload Car file: {}", e.getMessage());
+            return "UploadFailed";
+        }
+    }
     @Async
     public String insertCar(MultipartFile file, String json) {
         try {
@@ -95,15 +139,12 @@ public class AdminCarService {
                 return result;
 
             Long carCode = carMapper.getCarCode();
-            result = insertTr(carCode);
-            if (!result.equals("Success"))
-                return result;
 
             result = insertPrice(carCode, addCar);
             if (!result.equals("Success"))
                 return result;
 
-            result = insertImg(carCode, addCar);
+            result = insertImg(carCode, addCar ,file);
             if (!result.equals("Success"))
                 return result;
 
@@ -115,9 +156,10 @@ public class AdminCarService {
         }
     }
 
-    public String InsertTrim(CarTrim carTrim) {
+    public String InsertTrim(CarTrim carTrim,String masterCarName) {
         try {
             log.info("Trim Insert.");
+            carTrim.setCarTrimName(masterCarName+"_"+carTrim.getCarTrimName());
             carMapper.InsertTrim(carTrim);
             log.info("Insert Trim Success");
             return "Success";
@@ -200,6 +242,17 @@ public class AdminCarService {
             return "Failed";
         }
     }
+    public String CarBrandDelete(String masterCarBrandName) {
+        try {
+            log.info("CarBrand Delete.");
+            carMapper.CarBrandDelete(masterCarBrandName);
+            log.info("CarBrandDelete Success");
+            return "Success";
+        } catch (Exception e) {
+            log.error("Failed to delete Car Brand", e);
+            return "Failed";
+        }
+    }
 
     public String CarOptionDelete(Long CarCode, String CarOption) {
         try {
@@ -209,6 +262,39 @@ public class AdminCarService {
             return "Success";
         } catch (Exception e) {
             log.error("Failed to delete Car Option", e);
+            return "Failed";
+        }
+    }
+    public String CarTrimPriceChange(String TrimName,String ChangeValueTrim){
+        try{
+            log.info("CarTrimPriceChange Change."+TrimName+"for price"+ChangeValueTrim);
+            carMapper.CarTrimPriceChange(TrimName,ChangeValueTrim);
+            log.info("CarTrimPriceChange Success");
+            return "Success";
+        } catch (Exception e) {
+            log.error("Failed to Change Car Trim Price", e);
+            return "Failed";
+        }
+    }
+    public String CarOptionPriceChange(String OptionName,String ChangeValueOption){
+        try{
+            log.info("CarOptionPriceChange Change."+OptionName+"for price"+ChangeValueOption);
+            carMapper.CarOptionPriceChange(OptionName,ChangeValueOption);
+            log.info("CarOptionPriceChange Success");
+            return "Success";
+        } catch (Exception e) {
+            log.error("Failed to Change Car Option Price", e);
+            return "Failed";
+        }
+    }
+    public String CarLeasePriceChange(Long CarCode,String ChangeValueLeasePrice){
+        try{
+            log.info("CarLeasePriceChange Change."+CarCode+"for price"+ChangeValueLeasePrice);
+            carMapper.CarLeasePriceChange(CarCode,ChangeValueLeasePrice);
+            log.info("CarLeasePriceChange Success");
+            return "Success";
+        } catch (Exception e) {
+            log.error("Failed to Change Car Lease Price", e);
             return "Failed";
         }
     }

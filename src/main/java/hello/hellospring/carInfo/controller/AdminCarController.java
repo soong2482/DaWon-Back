@@ -1,5 +1,6 @@
 package hello.hellospring.carInfo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.hellospring.carInfo.domain.Insert.AddCar;
 import hello.hellospring.carInfo.domain.Insert.CarOption;
 import hello.hellospring.carInfo.domain.Insert.CarTrim;
@@ -10,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +33,17 @@ public class AdminCarController {
     }
     @PostMapping("${DaWonCar.backEndPoint}/Admin/InsertTrim")
     @ResponseBody
-    public String InsertTrim(@RequestBody CarTrim carTrim) {
-        return admincarService.InsertTrim(carTrim);
+    public String InsertTrim(@RequestBody Map<String, Object> requestPayload) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CarTrim carTrim = objectMapper.convertValue(requestPayload.get("carTrim"), CarTrim.class);
+        String masterCarName = String.valueOf(requestPayload.get("masterCarName"));
+        return admincarService.InsertTrim(carTrim, masterCarName);
+    }
+
+    @PostMapping("${DaWonCar.backEndPoint}/Admin/InsertBrand")
+    @ResponseBody
+    public String InsertBrand(@RequestParam("Car_Brand_IMG") MultipartFile multipartFile ,@RequestParam("Master_Car_Brand_Name") String masterCarBrandName) throws IOException {
+        return admincarService.insertBrand(multipartFile,masterCarBrandName);
     }
     @PostMapping("${DaWonCar.backEndPoint}/Admin/InsertOption")
     @ResponseBody
@@ -58,17 +71,53 @@ public class AdminCarController {
     public String CarDelete(@RequestHeader("CarCode")  Long CarCode){
         return admincarService.CarDelete(CarCode);
     }
+
     @PostMapping("${DaWonCar.backEndPoint}/Admin/CarTrimDelete")
     @ResponseBody
-    public String CarTrimDelete(@RequestHeader("CarCode") Long CarCode,@RequestHeader("CarTrimName")  String CarTrimName){
-        return admincarService.CarTrimDelete(CarCode,CarTrimName);
+    public String CarTrimDelete(@RequestBody Map<String, Object> requestBody) {
+        Long CarCode = Long.parseLong(String.valueOf(requestBody.get("CarCode")));
+        String CarTrimName = String.valueOf(requestBody.get("CarTrimName"));
+        return admincarService.CarTrimDelete(CarCode, CarTrimName);
     }
+
+    @PostMapping("${DaWonCar.backEndPoint}/Admin/CarBrandDelete")
+    @ResponseBody
+    public String CarBrandDelete(@RequestBody String masterCarBrandName) {
+        return admincarService.CarBrandDelete(masterCarBrandName);
+    }
+
+
+
+
     @PostMapping("${DaWonCar.backEndPoint}/Admin/CarOptionDelete")
     @ResponseBody
-    public String CarOptionDelete(@RequestHeader("CarCode") Long CarCode,@RequestHeader("CarOption")   String CarOption){
+    public String CarOptionDelete(@RequestBody Map<String, Object> requestBody){
+        Long CarCode = Long.parseLong(String.valueOf(requestBody.get("CarCode")));
+        String CarOption = String.valueOf(requestBody.get("CarOption"));
         return admincarService.CarOptionDelete(CarCode,CarOption);
     }
+    @PostMapping("${DaWonCar.backEndPoint}/Admin/Change/TrimPrice")
+    @ResponseBody
+    public String CarTrimPriceChange(@RequestBody Map<String, String> requestBody) {
+        String trimName = requestBody.get("TrimName");
+        String changeValueTrim = requestBody.get("ChangeValueTrim");
+        return admincarService.CarTrimPriceChange(trimName, changeValueTrim);
+    }
 
+    @PostMapping("${DaWonCar.backEndPoint}/Admin/Change/OptionPrice")
+    @ResponseBody
+    public String CarOptionPriceChange(@RequestBody Map<String, String> requestBody) {
+        String OptionName = requestBody.get("OptionName");
+        String ChangeValueOption = requestBody.get("ChangeValueOption");
+        return admincarService.CarOptionPriceChange(OptionName, ChangeValueOption);
+    }
 
+    @PostMapping("${DaWonCar.backEndPoint}/Admin/Change/CarLeasePrice")
+    @ResponseBody
+    public String CarLeasePriceChange(@RequestBody Map<String,String> requestBody){
+        Long CarCode = Long.parseLong(String.valueOf(requestBody.get("CarCode")));
+        String ChangeLeasePriceCar = requestBody.get("ChangeLeasePriceCar");
+        return admincarService.CarLeasePriceChange(CarCode, ChangeLeasePriceCar);
+    }
 
 }

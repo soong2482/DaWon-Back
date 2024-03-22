@@ -9,6 +9,7 @@ public class CarList {
     private String masterCarName;
     private Long masterCarOrder;
     private String masterCarRecommend;
+    private String masterCarBrandName;
     //car_price
     private String carLeasePrice;
     private String carRentPrice;

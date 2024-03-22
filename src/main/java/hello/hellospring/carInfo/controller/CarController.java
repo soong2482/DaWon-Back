@@ -1,4 +1,5 @@
 package hello.hellospring.carInfo.controller;
+import hello.hellospring.carInfo.domain.Insert.CarBrand;
 import hello.hellospring.carInfo.domain.Insert.CarOption;
 import hello.hellospring.carInfo.domain.Insert.CarTrim;
 import hello.hellospring.carInfo.domain.Select.CarList;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -32,13 +34,23 @@ public class CarController {
     @ResponseBody
     public List<CarTrim> ListCarTrim(@RequestHeader("CarCode")  Long CarCode){ return carService.getListCarTrim(CarCode);}
 
-    @GetMapping("${DaWonCar.backEndPoint}/GetOption")
+    @PostMapping("${DaWonCar.backEndPoint}/GetOption")
     @ResponseBody
-    public List<CarOption> ListCarOption(@RequestHeader("CarCode") Long CarCode ,@RequestHeader("CarTrimName")  String CarTrimName){
-        return carService.getListCaroption(CarCode,CarTrimName);}
+    public List<CarOption> ListCarOption(@RequestBody Map<String, Object> requestBody) {
 
+        Long carCode = Long.parseLong(String.valueOf(requestBody.get("CarCode")));
+        String carTrimName = String.valueOf(requestBody.get("CarTrimName"));
+        return carService.getListCaroption(carCode, carTrimName);
+    }
 
     @GetMapping("${DaWonCar.backEndPoint}/RecommendListCar")
     @ResponseBody
     public List<CarList> RecommendListCar(){ return carService.getRecommendList();}
+
+    @GetMapping("${DaWonCar.backEndPoint}/BrandList")
+    @ResponseBody
+    public List<CarBrand> BrandList(){ return carService.BrandList();}
+
+
 }
+

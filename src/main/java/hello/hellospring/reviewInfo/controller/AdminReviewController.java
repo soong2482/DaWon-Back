@@ -2,6 +2,7 @@ package hello.hellospring.reviewInfo.controller;
 
 import hello.hellospring.reviewInfo.domain.ChangeOrder;
 import hello.hellospring.reviewInfo.domain.Review;
+import hello.hellospring.reviewInfo.domain.UpdateReview;
 import hello.hellospring.reviewInfo.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,8 +35,8 @@ public class AdminReviewController {
 
     @PostMapping("${DaWonCar.backEndPoint}/Admin/Review/Update")
     @ResponseBody
-    public String UpdateReview(@RequestHeader("CustomerReviewCode") Long CustomerReviewCode,@RequestHeader("CustomerReviewTextarea") String CustomerReviewTextarea){
-        return reviewService.UpdateReview(CustomerReviewCode,CustomerReviewTextarea);
+    public String UpdateReview(@RequestBody UpdateReview updateReview){
+        return reviewService.UpdateReview(updateReview);
     }
 
     @PostMapping("${DaWonCar.backEndPoint}/Admin/Review/ChangeOrder")

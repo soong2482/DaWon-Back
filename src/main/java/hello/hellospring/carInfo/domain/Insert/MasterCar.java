@@ -8,6 +8,7 @@ import lombok.Data;
 public class MasterCar {
     private Long carCode;
     private String masterCarName;
-    private String masterCarOrder;
+    private Long masterCarOrder;
     private boolean masterCarRecommend;
+    private String masterCarBrandName;
 }

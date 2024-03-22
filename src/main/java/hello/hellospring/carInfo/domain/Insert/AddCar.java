@@ -7,13 +7,9 @@ import lombok.Data;
 
 public class AddCar {
     private String masterCarName;
-
     private String carLeasePrice;
     private String carRentPrice;
-
     private String carTrimName;
-
-    private String carImg;
-    private String carBrandImg;
+    private String carBrandName;
 
 }

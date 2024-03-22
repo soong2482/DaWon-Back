@@ -32,4 +32,5 @@ public class BannerController {
     @GetMapping("${DaWonCar.backEndPoint}/CenterBanner")
     @ResponseBody
     public List<CenterBanner> CenterBanner() {return centerBannerService.CenterBanner();}
+
 }

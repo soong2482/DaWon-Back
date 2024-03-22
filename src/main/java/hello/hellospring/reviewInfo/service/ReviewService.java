@@ -3,9 +3,11 @@ package hello.hellospring.reviewInfo.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.hellospring.reviewInfo.domain.ChangeOrder;
 import hello.hellospring.reviewInfo.domain.Review;
+import hello.hellospring.reviewInfo.domain.UpdateReview;
 import hello.hellospring.reviewInfo.mapper.ReviewMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -94,10 +96,10 @@ public class ReviewService {
         }
     }
 
-    public String UpdateReview(Long CustomerReviewCode,String CustomerReviewTextarea){
+    public String UpdateReview(UpdateReview updateReview){
         try{
-            log.info("Update Review {}",CustomerReviewCode);
-            reviewMapper.UpdateReview(CustomerReviewCode,CustomerReviewTextarea);
+            log.info("Update Review {}",updateReview.getCustomerReviewCode());
+            reviewMapper.UpdateReview(updateReview.getCustomerReviewCode(),updateReview.getCustomerReviewTextArea());
             log.info("Update Review Success");
             return "Success";
         }catch (Exception e){

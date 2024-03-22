@@ -1,5 +1,6 @@
 package hello.hellospring.carInfo.service;
 
+import hello.hellospring.carInfo.domain.Insert.CarBrand;
 import hello.hellospring.carInfo.domain.Insert.CarOption;
 import hello.hellospring.carInfo.domain.Insert.CarTrim;
 import hello.hellospring.carInfo.domain.Select.CarList;
@@ -65,4 +66,16 @@ public class CarService {
             return Collections.emptyList();
         }
     }
+    public List<CarBrand> BrandList(){
+        try {
+            log.info("BrandList selected.");
+            List<CarBrand> BrandList = carMapper.BrandList();
+            log.info("result size : {}", BrandList.size());
+            return BrandList;
+        } catch (Exception e) {
+            log.error("Failed to get BrandList", e);
+            return Collections.emptyList();
+        }
+    }
+
 }

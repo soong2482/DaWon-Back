@@ -10,6 +10,7 @@ public class CarDetailList {
     private Long carCode;
     private String masterCarName;
     private Long masterCarOrder;
+    private String masterCarBrandName;
 
     //car_price
     private String carLeasePrice;
@@ -20,7 +21,6 @@ public class CarDetailList {
 
     //car_img
     private String carImg;
-    private String carBrandImg;
 
     //car_option
     private String carOption;

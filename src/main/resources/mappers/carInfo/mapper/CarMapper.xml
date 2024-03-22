@@ -5,8 +5,8 @@
     <!--======================================================INSERT=========================================================-->
 
         <insert id="InsertMasterCar" parameterType="hello.hellospring.carInfo.domain.Insert.MasterCar">
-                INSERT INTO MASTER_CAR (car_code,master_car_name,master_car_order,master_car_recommend)
-                VALUES(#{carCode},#{masterCarName},#{masterCarOrder},#{masterCarRecommend})
+                INSERT INTO MASTER_CAR (car_code,master_car_name,master_car_order,master_car_recommend,master_car_brand_name)
+                VALUES(#{carCode},#{masterCarName},#{masterCarOrder},#{masterCarRecommend},#{masterCarBrandName})
         </insert>
         <insert id="InsertTrim" parameterType="hello.hellospring.carInfo.domain.Insert.CarTrim">
                 INSERT INTO CAR_TRIM (car_code,car_trim_name,car_trim_price)
@@ -17,12 +17,16 @@
                 VALUES(#{carCode},#{carLeasePrice},#{carRentPrice})
         </insert>
         <insert id="InsertImg" parameterType="hello.hellospring.carInfo.domain.Insert.CarImg">
-                INSERT INTO CAR_IMG (car_code,car_img,car_brand_img)
-                VALUES(#{carCode},#{carImg},#{carBrandImg})
+                INSERT INTO CAR_IMG (car_code,car_img)
+                VALUES(#{carCode},#{carImg})
         </insert>
         <insert id="InsertOption" parameterType="hello.hellospring.carInfo.domain.Insert.CarOption">
-                INSERT INTO CAR_OPTION (car_option,car_code,car_trim_name,car_option_lease_price)
-                VALUES(#{carOption},#{carCode},#{carTrimName},#{carOptionLeasePrice})
+                INSERT INTO CAR_OPTION (car_code,car_option,car_trim_name,car_option_lease_price)
+                VALUES(#{carCode},#{carOption},#{carTrimName},#{carOptionLeasePrice})
+        </insert>
+        <insert id="InsertBrand" parameterType="hello.hellospring.carInfo.domain.Insert.CarBrand">
+                INSERT INTO CAR_BRAND (master_car_brand_name,car_brand_img)
+                VALUES(#{masterCarBrandName},#{carBrandImg})
         </insert>
 
 
@@ -35,7 +39,7 @@
         , car_price.car_lease_price
         , car_price.car_rent_price
         , car_img.car_img
-        , car_img.car_brand_img
+        , master_car.master_car_brand_name
         FROM master_car
         LEFT OUTER JOIN car_price
         ON master_car.car_code = car_price.car_code
@@ -61,10 +65,11 @@
         car_price.car_lease_price,
         car_price.car_rent_price,
         car_img.car_img,
-        car_img.car_brand_img
+        car_brand.car_brand_img
         FROM master_car
         LEFT OUTER JOIN car_price ON master_car.car_code = car_price.car_code
         LEFT OUTER JOIN car_img ON master_car.car_code = car_img.car_code
+        LEFT OUTER JOIN car_brand ON master_car.master_car_brand_name = car_brand.master_car_brand_name
         ORDER BY master_car.master_car_order ASC
         LIMIT 18;
 
@@ -84,17 +89,24 @@
         car_price.car_lease_price,
         car_price.car_rent_price,
         car_img.car_img,
-        car_img.car_brand_img
+        car_brand.car_brand_img
         FROM
         master_car
         LEFT OUTER JOIN
         car_price ON master_car.car_code = car_price.car_code
         LEFT OUTER JOIN
         car_img ON master_car.car_code = car_img.car_code
+        LEFT OUTER JOIN
+        car_brand ON master_car.master_car_brand_name = car_brand.master_car_brand_name
         WHERE
         master_car.master_car_recommend = true
         ORDER BY
         master_car.master_car_order ASC
+    </select>
+
+    <select id="BrandList"  resultType="hello.hellospring.carInfo.domain.Insert.CarBrand">
+        SELECT *
+        FROM car_brand
     </select>
 
 <!--    <select id="DetailListCar" resultType="hello.hellospring.carInfo.domain.Select.CarDetailList">-->
@@ -132,13 +144,26 @@
          SET master_car_order = #{carOrder}
          WHERE car_code = #{carCode};
     </update>
-
     <update id="UpdateRecommendCar">
         UPDATE master_car
         SET master_car_recommend  = not master_car_recommend
         WHERE car_code = #{carCode};
     </update>
-
+    <update id="CarTrimPriceChange">
+        UPDATE car_trim
+        SET car_trim_price = #{changeValueTrim}
+        WHERE car_trim_name = #{trimName};
+    </update>
+    <update id="CarOptionPriceChange">
+        UPDATE car_option
+        SET car_option_lease_price = #{changeValueOption}
+        WHERE car_option = #{optionName};
+    </update>
+    <update id="CarLeasePriceChange">
+        UPDATE car_price
+        SET car_lease_price = #{changeValueLeasePrice}
+        WHERE car_code = #{carCode};
+    </update>
     <!--=================================================DELETE=======================================================-->
     <delete id="CarOptionDelete">
         DELETE FROM CAR_OPTION
@@ -153,6 +178,10 @@
     <delete id="CarDelete">
         DELETE FROM master_car
         WHERE car_code=#{carCode};
+    </delete>
+    <delete id="CarBrandDelete">
+        DELETE FROM CAR_BRAND
+        WHERE MASTER_CAR_BRAND_NAME = #{masterCarBrandName}
     </delete>
 </mapper>
 
