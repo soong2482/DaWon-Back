@@ -14,8 +14,8 @@ public class CarRecommendList {
     //car_price
     private String carLeasePrice;
     private String carRentPrice;
-
     //car_img
     private String carImg;
-
+    //car_brand
+    private String carBrandImg;
 }

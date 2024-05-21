@@ -1,7 +1,9 @@
 package hello.hellospring.carInfo.mapper;
 import hello.hellospring.carInfo.domain.Insert.*;
+import hello.hellospring.carInfo.domain.Select.CarDetailList;
 import hello.hellospring.carInfo.domain.Select.CarList;
 
+import hello.hellospring.carInfo.domain.Select.CarRecommendList;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,12 +20,15 @@ public interface CarMapper {
     void InsertImg(CarImg carImg);
     void InsertOption(CarOption carOption);
     void InsertBrand(CarBrand carBrand);
+    void InsertDetail(CarDetail carDetail);
 
     List<CarList> HomeListCar();
     List<CarOption> CarOption(Long carCode,String carTrimName);
     List<CarTrim> CarTrim(Long carCode);
-    List<CarList> RecommendListCar();
+    List<CarRecommendList> RecommendListCar();
     List<CarBrand> BrandList();
+    List<CarDetail> DetailList(Long carCode);
+    List<CarDetailList> DetailCarFirst(Long carCode);
 
     void UpdateCarOrder(Long carCode,String carOrder);
     void UpdateRecommendCar(Long carCode);
@@ -31,6 +36,7 @@ public interface CarMapper {
     void CarTrimPriceChange(String trimName,String changeValueTrim);
     void CarOptionPriceChange(String optionName,String changeValueOption);
     void CarLeasePriceChange(Long carCode,String changeValueLeasePrice);
+    void CarDetailChange(CarDetail carDetail);
 
     void CarDelete(Long carCode);
     void CarTrimDelete(Long carCode,String carTrimName);

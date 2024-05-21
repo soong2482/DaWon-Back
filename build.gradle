@@ -1,28 +1,33 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.11'
+	id 'org.springframework.boot' version '3.2.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'hello'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
 }
+
 bootJar {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
 dependencies {
 	implementation 'org.jetbrains:annotations:24.0.0'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
-	implementation 'org.mybatis:mybatis:3.5.8'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'org.mybatis:mybatis:3.5.11'
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+tasks.withType(JavaCompile) {
+	options.compilerArgs.addAll(["--release", "17"])
 }
 tasks.named('test') {
 	useJUnitPlatform()

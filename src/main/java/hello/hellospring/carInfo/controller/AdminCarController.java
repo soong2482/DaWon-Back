@@ -2,6 +2,7 @@ package hello.hellospring.carInfo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.hellospring.carInfo.domain.Insert.AddCar;
+import hello.hellospring.carInfo.domain.Insert.CarDetail;
 import hello.hellospring.carInfo.domain.Insert.CarOption;
 import hello.hellospring.carInfo.domain.Insert.CarTrim;
 
@@ -21,7 +22,6 @@ public class AdminCarController {
 
     @Value("${DaWonCar.backEndPoint}")
     private String BackEndpoint;
-    //    ${DaWonCar.backEndPoint}/
 
     private final AdminCarService admincarService;
 
@@ -86,9 +86,6 @@ public class AdminCarController {
         return admincarService.CarBrandDelete(masterCarBrandName);
     }
 
-
-
-
     @PostMapping("${DaWonCar.backEndPoint}/Admin/CarOptionDelete")
     @ResponseBody
     public String CarOptionDelete(@RequestBody Map<String, Object> requestBody){
@@ -119,5 +116,9 @@ public class AdminCarController {
         String ChangeLeasePriceCar = requestBody.get("ChangeLeasePriceCar");
         return admincarService.CarLeasePriceChange(CarCode, ChangeLeasePriceCar);
     }
-
+    @PostMapping("${DaWonCar.backEndPoint}/Admin/Change/CarDetail")
+    @ResponseBody
+    public String CarDetailChange(@RequestBody CarDetail carDetail){
+        return admincarService.CarDetailChange(carDetail);
+    }
 }

@@ -1,9 +1,12 @@
 package hello.hellospring.carInfo.service;
 
 import hello.hellospring.carInfo.domain.Insert.CarBrand;
+import hello.hellospring.carInfo.domain.Insert.CarDetail;
 import hello.hellospring.carInfo.domain.Insert.CarOption;
 import hello.hellospring.carInfo.domain.Insert.CarTrim;
+import hello.hellospring.carInfo.domain.Select.CarDetailList;
 import hello.hellospring.carInfo.domain.Select.CarList;
+import hello.hellospring.carInfo.domain.Select.CarRecommendList;
 import hello.hellospring.carInfo.mapper.CarMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,10 +58,10 @@ public class CarService {
             return Collections.emptyList();
         }
     }
-    public List<CarList> getRecommendList(){
+    public List<CarRecommendList> getRecommendList(){
         try {
             log.info("RecommendList selected.");
-            List<CarList> RecommendList = carMapper.RecommendListCar();
+            List<CarRecommendList> RecommendList = carMapper.RecommendListCar();
             log.info("result size : {}", RecommendList.size());
             return RecommendList;
         } catch (Exception e) {
@@ -77,5 +80,27 @@ public class CarService {
             return Collections.emptyList();
         }
     }
+    public List<CarDetail> DetailList(Long carCode){
+        try {
+            log.info("DetailList selected.");
+            List<CarDetail> DetailList = carMapper.DetailList(carCode);
+            log.info("result size : {}", DetailList.size());
+            return DetailList;
+        } catch (Exception e) {
+            log.error("Failed to get DetailList", e);
+            return Collections.emptyList();
+        }
 
+    }
+    public List<CarDetailList> CarDetailList(Long carCode){
+        try {
+            log.info("HomeCarDetailList selected {}",carCode);
+            List<CarDetailList> CarDetailList = carMapper.DetailCarFirst(carCode);
+            log.info("result size : {}", CarDetailList.size());
+            return CarDetailList;
+        } catch (Exception e) {
+            log.error("Failed to get HomeCarDetailList", e);
+            return Collections.emptyList();
+        }
+    }
 }

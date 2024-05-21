@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hello.hellospring.loginInfo.mapper.UserMapper">
+
+    <select id="FindById" resultType="java.lang.String">
+        SELECT username from users where username =#{username};
+    </select>
+    <select id ="FindByPassword" resultType="hello.hellospring.loginInfo.domain.User">
+        SELECT * FROM users LEFT OUTER JOIN authorities ON users.username = #{username} AND authorities.username = #{username} WHERE users.username= #{username};
+    </select>
+
+</mapper>

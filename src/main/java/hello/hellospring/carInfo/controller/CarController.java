@@ -1,8 +1,11 @@
 package hello.hellospring.carInfo.controller;
 import hello.hellospring.carInfo.domain.Insert.CarBrand;
+import hello.hellospring.carInfo.domain.Insert.CarDetail;
 import hello.hellospring.carInfo.domain.Insert.CarOption;
 import hello.hellospring.carInfo.domain.Insert.CarTrim;
+import hello.hellospring.carInfo.domain.Select.CarDetailList;
 import hello.hellospring.carInfo.domain.Select.CarList;
+import hello.hellospring.carInfo.domain.Select.CarRecommendList;
 import hello.hellospring.carInfo.mapper.CarMapper;
 import hello.hellospring.carInfo.service.CarService;
 import lombok.RequiredArgsConstructor;
@@ -37,20 +40,27 @@ public class CarController {
     @PostMapping("${DaWonCar.backEndPoint}/GetOption")
     @ResponseBody
     public List<CarOption> ListCarOption(@RequestBody Map<String, Object> requestBody) {
-
         Long carCode = Long.parseLong(String.valueOf(requestBody.get("CarCode")));
         String carTrimName = String.valueOf(requestBody.get("CarTrimName"));
         return carService.getListCaroption(carCode, carTrimName);
     }
-
+    @GetMapping("${DaWonCar.backEndPoint}/CarDetailList")
+    @ResponseBody
+    public List<CarDetail> ListDetail(@RequestHeader("CarCode") Long CarCode) {
+        return carService.DetailList(CarCode);
+    }
     @GetMapping("${DaWonCar.backEndPoint}/RecommendListCar")
     @ResponseBody
-    public List<CarList> RecommendListCar(){ return carService.getRecommendList();}
+    public List<CarRecommendList> RecommendListCar(){ return carService.getRecommendList();}
 
     @GetMapping("${DaWonCar.backEndPoint}/BrandList")
     @ResponseBody
     public List<CarBrand> BrandList(){ return carService.BrandList();}
 
-
+    @GetMapping("${DaWonCar.backEndPoint}/DetailCar")
+    @ResponseBody
+    public List<CarDetailList> ListCarDetailList(@RequestHeader("CarCode") Long CarCode){
+    return carService.CarDetailList(CarCode);
+    }
 }
 

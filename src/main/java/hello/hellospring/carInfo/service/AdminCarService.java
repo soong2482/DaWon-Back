@@ -81,6 +81,26 @@ public class AdminCarService {
             return "Failed";
         }
     }
+
+    public String insertDetail(Long carCode,AddCar addCar){
+        try {
+            log.info("Inserting Detail");
+            CarDetail carDetail = new CarDetail();
+            carDetail.setCar24Price(addCar.getCar24Price());
+            carDetail.setCar48Price(addCar.getCar48Price());
+            carDetail.setCarFuel(addCar.getCarFuel());
+            carDetail.setCarMileage(addCar.getCarMileage());
+            carDetail.setCarSort(addCar.getCarSort());
+            carDetail.setCarCode(carCode);
+            carDetail.setCarRealPrice(addCar.getCarRealPrice());
+            carMapper.InsertDetail(carDetail);
+            log.info("Inserted Detail Successfully");
+            return "Success";
+        } catch (Exception e) {
+            log.error("Failed to Detail", e);
+            return "Failed";
+        }
+    }
     public String insertBrand(MultipartFile file,String masterCarBrandName) throws IOException{
         try{
             log.info("UploadFile-CarBrand");
@@ -145,6 +165,10 @@ public class AdminCarService {
                 return result;
 
             result = insertImg(carCode, addCar ,file);
+            if (!result.equals("Success"))
+                return result;
+
+            result = insertDetail(carCode,addCar);
             if (!result.equals("Success"))
                 return result;
 
@@ -297,5 +321,17 @@ public class AdminCarService {
             log.error("Failed to Change Car Lease Price", e);
             return "Failed";
         }
+    }
+    public String CarDetailChange(CarDetail carDetail){
+        try{
+            log.info("CarDetailChange Change");
+            carMapper.CarDetailChange(carDetail);
+            log.info("CarDetailChange Success");
+            return "Success";
+        }catch (Exception e) {
+            log.error("Failed to CarDetailChange", e);
+            return "Failed";
+        }
+
     }
 }
